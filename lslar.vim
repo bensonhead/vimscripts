@@ -1,7 +1,7 @@
 
 " navigate through the output of ls -laR
 
-function DownDir()
+function s:DownDir()
   let l=getline(".")
   if l[0] != 'd'
     echo "not dir:".l
@@ -21,7 +21,7 @@ function DownDir()
   endif
 endfunction 
 
-function UpDir()
+function s:UpDir()
   ?^.*:$
   let thisdir=getline(".")[:-2]
   let path=split(thisdir,"/")
@@ -29,9 +29,25 @@ function UpDir()
     exec ":/^\\V" . escape(join(path[0:-2],"/"),"/") . ":\\$"
     exec ":/\\V ".escape(escape(path[-1]," "),"\\")."\\$"
   endif
-
-
 endfunction
 
-nmap <C-Down> :call DownDir()<CR>
-nmap <C-Up> :call UpDir()<CR>
+function s:mappings(arg)
+  if tolower(a:arg) == "on"
+    echo "Defined <C-Up> and <C-Down>"
+    nnoremap <buffer> <C-Down> :call <SID>DownDir()<CR>
+    nnoremap <buffer> <C-Up> :call <SID>UpDir()<CR>
+  elseif tolower(a:arg) == "off"
+    echo "Undefined <C-Up> and <C-Down>"
+    nunmap <buffer> <C-Down>
+    nunmap <buffer> <C-Up>
+  elseif a:arg == ""
+    echo nothing
+  endif
+endfunction
+
+:command! -nargs=? Lslar :call <SID>mappings("<ARGS>")
+
+if has("gui")
+  menu &Plugins.ls\ -laR :Lslar on
+endif
+
