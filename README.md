@@ -14,7 +14,7 @@ Defines 2 macro commands:
 
 ## term.vim
 
-Defines `:Term` command, which starts built-in terminal and defines `&lt;C-CR>` mapping which sends current line (or selection) to the terminal window as keystrokes.
+Defines `:Term` command, which starts built-in terminal and defines `<C-CR>` mapping which sends current line (or selection) to the terminal window as keystrokes.
 
-Global or window variable `TERMBUF` overrides buffer number where selections is set to (this is only needed if there is more than one terminal open)
+Global or window variable `TERMBUF` overrides buffer number where selection is sent to (this is only needed if there is more than one terminal open).
 

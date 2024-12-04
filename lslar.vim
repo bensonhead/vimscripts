@@ -48,6 +48,6 @@ endfunction
 :command! -nargs=? Lslar :call <SID>mappings("<ARGS>")
 
 if has("gui")
-  menu &Plugins.ls\ -laR :Lslar on
+  menu &Plugins.&ls\ -laR :Lslar on
 endif
 

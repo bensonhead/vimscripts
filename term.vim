@@ -37,3 +37,6 @@ command! -nargs=? Term {
   call <SID>CreateMappings()
 }
 
+if has("gui")
+  menu &Plugins.&Term :Term
+endif
