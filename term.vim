@@ -1,3 +1,7 @@
+" 
+"
+"
+
 function s:FindTerminal()
   for inf in getwininfo()
     if inf.terminal 
@@ -28,15 +32,24 @@ function s:CreateMappings()
   " sometimes 2 <CR> is needed, sometimes 1; not sure when
   vnoremap <C-CR> :silent g/^/call term_sendkeys(<SID>AttachedTerm(), getline(line("."))."\r")<CR><CR>
 
+  " Shift+space enters "[32;2u" in the terminal when running powershell
+  " This is powershell/Readline issue, but easier to deal with a map
+  tmap <S-Space> <Space>
 endfunction
 
-command! -nargs=? Term {
+command! -bang -nargs=? Term {
   var thiswin = win_getid()
-  :term <args>
-  win_gotoid(thiswin)
+  if "<args>" == "" && exists('g:termshell')
+    exe ":term " .. g:termshell
+  else
+    :term <args>
+  endif
+  if "<bang>" == "" 
+    win_gotoid(thiswin)
+  endif
   call <SID>CreateMappings()
 }
 
 if has("gui")
-  menu &Plugins.&Term :Term
+  menu &Plugins.&Term :Term<space>
 endif

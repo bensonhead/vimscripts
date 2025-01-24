@@ -2,6 +2,7 @@
 syntax off
 
 iabbr #d <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR>
+iabbr #r <C-R>=system("tr -cd a-zA-Z0-9 </dev/urandom <bar> head -c 22")<CR>
 set clipboard+=unnamedplus,unnamed
 set listchars+=trail:_,extends:»,precedes:«,
 set showbreak=▌ " lB 
