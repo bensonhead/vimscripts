@@ -40,9 +40,9 @@ endfunction
 command! -bang -nargs=? Term {
   var thiswin = win_getid()
   if "<args>" == "" && exists('g:termshell')
-    exe ":term " .. g:termshell
+    exe ":term ++close " .. g:termshell
   else
-    :term <args>
+    :term ++close <args>
   endif
   if "<bang>" == "" 
     win_gotoid(thiswin)
